@@ -8,7 +8,10 @@ alphabet2 = "abcdefghijklmnopqrstuvwxyzàâéèêëîïôùûüÿæœç-'"
 alphabet = alphabet2
 
 
-# fonction pour embellir le data
+''' 
+### CREATION DU TABLEAU DE PROBABILITE DIAGRAMME ################
+'''
+#~~ fonction pour embellir l'affichage du data diagramme
 def beautyData(data):
     cols_vides = [col for col in data.columns if data[col].sum() == 0.0]
     ligs_vides = [lig for lig in data.index.values.tolist() if data.loc[lig].sum() == 0.0]
@@ -18,7 +21,7 @@ def beautyData(data):
     return data
     
 
-# mise a jour du tableau pour 1 mot
+#~~ mise a jour du tableau de probabilité pour 1 mot
 def majDataAvec1Mot(mot,data):
     mot = mot.lower()
     
@@ -27,17 +30,22 @@ def majDataAvec1Mot(mot,data):
     
     data[str(debutl)]["deb"] += 1
     data["fin"][str(finl)] += 1
-    #occurrence = {str(c) : mot.count(c) for c in mot}
     
     for i in range(len(mot)-1):
         data.loc[str(mot[i])][str(mot[i+1])] += 1
         
     
-
+        
+    
+#~~ mise a jour du tableau de probabilité pour tout un dictionnaire
 def majDataALLWORDS(dico,data):
     for mot in dico:
-        majDataAvec1Mot(mot,data)
+        try:
+            majDataAvec1Mot(mot,data)
+        except:
+            print(mot,"error majDataAvec1mot !")
 
+#~~ fct pour normaliser le tableau de proba
 def majDataNormaliser(data):
     indexs = data.index.values.tolist()
     for lig in indexs:
@@ -45,21 +53,25 @@ def majDataNormaliser(data):
         
         if somme != 0:
             data.loc[lig]/= somme
-        
+
+#~~ creer le tableau de probabilité a partir d'une liste de mots
 def creerDigramme(dic):
     global alphabet
-    listelettres = list(alphabet)
-    tab = np.zeros((len(alphabet)+1,len(alphabet)+1))
-    data = pd.DataFrame(tab, index = (["deb"] + listelettres), columns = (listelettres + ["fin"]))
+    listelettres = list(alphabet) #creer une liste de lettre à partir de l'alphabet
+    tab = np.zeros((len(alphabet)+1,len(alphabet)+1)) # tableau numpy vide
     
-    majDataALLWORDS(dic,data)
-    majDataNormaliser(data)
+    #creation du dataFrame à 2 dimension
+    data = pd.DataFrame(tab, index = (["deb"] + listelettres), columns = (listelettres + ["fin"])) 
+    
+    
+    majDataALLWORDS(dic,data) # mettre a jour le nombre d'occurence de chaque mot du dictionnaire
+    majDataNormaliser(data) # normaliser le tout
     return data
 
 ''' 
-### RANDOM ################
+### CREATION DE MOT ALEATOIRE EN FCT DU DIGRAMME ################
 '''
-
+#~~ sortirLettreAlea() qui retourne une lettre aléatoire, en fonction de la lettre de depart mis en parametre
 def sortirLettreAlea(lettrePos,diagramme):
     
     listesdechoixsuivant = diagramme.columns.tolist()
@@ -68,6 +80,7 @@ def sortirLettreAlea(lettrePos,diagramme):
     lettre = np.random.choice(listesdechoixsuivant, p=listedeproba)
     return lettre
 
+#~~ creerMotAleaDiagramme() qui retourne un mot aléatoire
 def creerMotAleaDiagramme(taille,diagramme):
     res = [sortirLettreAlea('deb',diagramme)]
     
@@ -78,21 +91,7 @@ def creerMotAleaDiagramme(taille,diagramme):
     res = res[0:-1]
     return "".join(res)
 
-def printresultat(cb,nom):
-    global data
-    chemin = "resultat_"
-    chemin += nom
-    chemin += ".txt"
-    
-    loo = []
-    with open(chemin,"w") as fic:
-        for k in range(cb):
-            new = creerMotAleaDiagramme(5,data)
-            loo.append(new)
-        loo = list(dict.fromkeys(loo))
-        loo.sort()
-        fic.write("\n".join(loo))
-    print(loo[0:10])
 
-def afficher_resultat_ALL_DATA(dossier):
-    dossier += "/fr"
+
+    
+
