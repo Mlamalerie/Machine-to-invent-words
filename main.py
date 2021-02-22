@@ -90,12 +90,13 @@ def cleanDic(dic):
 
     for mot in dic:
         ok = True
-        
+        mot = mot.lower()
         if len(mot) > 1 and len(mot.split(' ')) == 1:
             mot = enlever_accent(mot)
-            
+           
             for c in mot:
                 if c not in alphabet:
+                    #ìprint(c,alphabet6)
                     suppr.append(mot)   
                     ok = False
                     
@@ -213,7 +214,7 @@ def printresultat(cheminFichier,cb,taille,trig_ok = True):
         data = creerTrigramme(liste_mots)
     #print(beautyData(dataDI)) # afficher le tableau de probabilité
     
-    nomEmplacementSauvegarde = "result"
+    nomEmplacementSauvegarde = "results"
     if not os.path.exists(nomEmplacementSauvegarde):
     	os.makedirs(nomEmplacementSauvegarde)
     
@@ -225,7 +226,7 @@ def printresultat(cheminFichier,cb,taille,trig_ok = True):
         chemin += "/result_DI_"
     else:
         chemin += "/result_TRI_"
-    chemin += nom
+    chemin += cheminFichier.split("/")[-2] +"-"+nom
     chemin += "_"+str(taille)
     chemin += "_"+str(cb) 
     chemin += ".txt"
@@ -332,8 +333,8 @@ def MENU_MAIN():
     print("################## * CHOOSE YOUR METHOD *")
     print("################## (0 : DIGRAMME)")
     print("################## (1 : TRIGRAMME)")
-    #c = int(input(" > "))
-    c = 1
+    c = int(input(" > "))
+    
     if c == 1:
         Menu_TRI()
     else:
