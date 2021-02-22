@@ -2,14 +2,13 @@
 
 We built a program using python able to invent words and simple sentences.
 
-### words
+### ⚙ How it works
 
-### sentences
 
 ### 📸 Screenshots 
 
-<img src="screens/1.PNG" width="200">
-<img src="screens/2.png" width="250">
+<img src="screens/1.PNG" width="250" alt="menu select file">
+<img src="screens/2.png" width="300" alt="result example">
 
 
 
