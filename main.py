@@ -1,30 +1,16 @@
-# -*- coding: utf-8 -*-
+0# -*- coding: utf-8 -*-
 import random,os
-from Diagramme import creerDigramme,creerMotAleaDiagramme,beautyData
+from Digramme import creerDigramme,creerMotAleaDigramme,beautyData
 
 ''' 
 ### PARAMETRES VARIABLE ################
 '''
 
-
-i = 0
 listefichiers = os.listdir("data/fr")
-
-print("#### Select a file")
-for txt in listefichiers:
-    print(f' ({i})',txt)
-    i+=1
-choix = int(input(' >'))
-cheminFichier = "data/fr/" + listefichiers[choix]
-
-print("#### Select nb new words")
-nb = int(input(' >'))
-print("#### Select len max each words")
-taillemax = int(input(' >'))
 alphabet = "abcdefghijklmnopqrstuvwxyzàâéèêëîïôùûüÿæœç"
 
 
-mot = "anticonstitutionnelle"
+
 
 
 def enlever_accent(mot):
@@ -91,7 +77,7 @@ def cleanDic(dic):
     res.sort()
     return (suppr,res)
 
-
+''' ##SEPAR2 MOT PAR SYLLABES
 def syllabe(mot):
     lis = [mot[0]]
     voyelle = "aeiouy"
@@ -137,6 +123,9 @@ def syllabe(mot):
              lis[i-1] = bay[0:p]
              lis.insert(i,bay[p:])
              i+=1
+             
+             
+             
         i+=itera
              
         
@@ -149,11 +138,12 @@ def liste2syllabes(listemots):
     listesy = [syllabe(m) for m in listemots]
     return [sy for mot in listesy for sy in mot]
 
-'''   
+
+
 cheminFichier = "data/fr/nomPropre.txt"
 listes2mot = get_words_dic(cheminFichier)
-kelbaysuppr = cleanDic(listes2mot)
-
+kelbaysuppr,listes2mot = cleanDic(listes2mot)
+listes2mot = ["mlamali","raoufi","yohan","roukia","noah","morgan"]
 lsyllabes = liste2syllabes(listes2mot)
 lsyllabes.sort()
 print(len(lsyllabes))
@@ -163,7 +153,7 @@ print(lsyllabes)
 
 
 if len(kelbaysuppr) > 0:
-    print(kelbaysuppr)
+    print("len suppr :",len(kelbaysuppr))
 '''
 
 ''' 
@@ -177,13 +167,16 @@ def realword(result,dic): #affiche pourcentage de mot qui existe déjà
     
     return cpt/len(result)
 
-def printresultat(cheminFichier,cb,taille):
+def printresultat(cheminFichier,cb,taille,trig_ok = True):
     liste_mots = get_words_dic(cheminFichier)
     suppr, liste_mots = cleanDic(liste_mots) #clean the list
-    print(" * Word deleted :",len(suppr))
-    print(" * Size liste de mots :",len(liste_mots))
+    print(" * Word deleted from {} : {}".format(cheminFichier,len(suppr)))
+    print(" * Number of words now :",len(liste_mots))
     
-    dataDI = creerDigramme(liste_mots)
+    if not trig_ok:
+        data = creerDigramme(liste_mots)
+    else:
+        data = creerTrigramme(liste_mots)
     #print(beautyData(dataDI)) # afficher le tableau de probabilité
     
     nomEmplacementSauvegarde = "result"
@@ -193,7 +186,11 @@ def printresultat(cheminFichier,cb,taille):
     nom = cheminFichier.split("/")[-1][:-4]
     chemin = nomEmplacementSauvegarde
     
-    chemin += "/result_"
+    
+    if not trig_ok:
+        chemin += "/result_DI_"
+    else:
+        chemin += "/result_TRI_"
     chemin += nom
     chemin += "_"+str(taille)
     chemin += "_"+str(cb) 
@@ -202,18 +199,123 @@ def printresultat(cheminFichier,cb,taille):
     loo = []
     with open(chemin,"w") as fic: #creer fichier txt
         for k in range(cb): #creer k nouveaux mots
-            new = creerMotAleaDiagramme(taille-1,dataDI)
+            if not trig_ok:
+                new = creerMotAleaDigramme(taille-1,data)
+            else:
+                new = creerMotAleaTrigramme(taille-1,data)
+            
             loo.append(new)
             
-        loo = list(dict.fromkeys(loo))
+        loo = list(dict.fromkeys(loo)) #delete duplicate
         loo.sort() 
         fic.write("\n".join(loo)) 
         
-    print(" * :",chemin)
-    print(f" * % word also existing in {nom} :", realword(loo,liste_mots)*100)
+    print(" * The generated words are saved :",chemin,"!")
+    print(f" * {round(realword(loo,liste_mots)*100,2)} % of the words already exist in {nom} file")
 
 
+def genererPhrases_DI(cb):
+    liste_mots = get_words_dic("data/fr/" + listefichiers[5])
+    suppr, liste_mots = cleanDic(liste_mots)
+    dataVerbe =  creerDigramme(liste_mots) 
+    print("wait...")
+    liste_mots = get_words_dic("data/fr/" + listefichiers[3])
+    suppr, liste_mots = cleanDic(liste_mots)
+    dataNom =  creerDigramme(liste_mots) 
+    print("wait..")
+    liste_mots = get_words_dic("data/fr/" + listefichiers[2])
+    suppr, liste_mots = cleanDic(liste_mots)
+    dataArticle = creerDigramme(liste_mots) 
+    print("wait. \n")
+    liste_mots = get_words_dic("data/fr/" + listefichiers[1])
+    suppr, liste_mots = cleanDic(liste_mots)
+    dataAdjectif =  creerDigramme(liste_mots) 
+    print(" ~  VERBE + ARTICLE + NOM + ADJECTIF")
+    for k in range(cb):
+        article = creerMotAleadigramme(3,dataArticle)
+        nom = creerMotAleadigramme(10,dataNom)
+        while len(nom) < 3:
+            nom = creerMotAleadigramme(10,dataNom)
+        verbe = creerMotAleadigramme(12,dataVerbe)
+        while len(verbe) < 3:
+            verbe = creerMotAleadigramme(12,dataVerbe)
+        adjectif = creerMotAleadigramme(12,dataAdjectif)
+        while len(adjectif) < 2:
+            adjectif = creerMotAleadigramme(12,dataAdjectif)
+        
+        if article[-1] == 's':
+            if nom[-1] != "s":
+                nom += "s"
+            if adjectif[-1] != "s":
+                 adjectif += "s"
+           
+        print(k,"-",verbe,article,nom,adjectif)
 
-printresultat(cheminFichier,nb,taillemax)
+def genererPhrases_TRI(cb):
+    pass
+
+def genererMots(trig_ok):
+    print("#### Select a file")
+    i = 0
+    for txt in listefichiers:
+        print(f' ({i})',txt)
+        i+=1
+    choix = int(input(' >'))
+    cheminFichierDico = "data/fr/" + listefichiers[choix]
+    nb = int(input('#### how many new words to create > '))
+    taillemax = int(input('#### max word length > '))
+    
+    if not trig_ok:
+        printresultat(cheminFichierDico,nb,taillemax,False)
+    else:
+        printresultat(cheminFichierDico,nb,taillemax,True)
+
+    
+def Menu_DI():
+    print("######### * DIGRAM METHOD *")
+    print("######### (0 : Words)")
+    print("######### (1 : Sentences)")
+    c = int(input(" > "))
+    if c == 1:
+        cb = int(input(" * how many new sentences to create > "))
+        print("wait....")
+        genererPhrases_DI(cb)
+    else:
+        genererMots(False)
+    
+
+def Menu_TRI():
+    print("######### * TRIGRAM METHOD *")
+    print("######### (0 : Words)")
+    print("######### (1 : Sentences)")
+    c = int(input(" > "))
+    if c == 1:
+        cb = int(input(" * how many new sentences to create > "))
+        print("wait....")
+        #genererPhrases_TRI(cb)
+    else:
+        genererMots_TRI()
+        print("*")
+    
+    
+
+def MENU_MAIN():
+    print("################## * CHOOSE YOUR METHOD *")
+    print("################## (0 : DIGRAMME)")
+    print("################## (1 : TRIGRAMME)")
+    c = int(input(" > "))
+    if c == 1:
+        Menu_TRI()
+    else:
+        Menu_DI()
+      
+    c = int(input("\n (0 : CONTINUE)   (1 : QUIT) > "))
+    if c == 0:
+        MENU_MAIN()
+        
+        
+MENU_MAIN()
+
+
 
 

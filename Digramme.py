@@ -2,16 +2,11 @@
 import numpy as np
 import pandas as pd
 
-alphabet1 = "abcdefghijklmnopqrstuvwxyzàâéèêëîïôùûüÿæœç-"
-alphabet2 = "abcdefghijklmnopqrstuvwxyzàâéèêëîïôùûüÿæœç-'"
-
-alphabet = alphabet2
-
-
+alphabet = "abcdefghijklmnopqrstuvwxyzàâéèêëîïôùûüÿæœç"
 ''' 
-### CREATION DU TABLEAU DE PROBABILITE DIAGRAMME ################
+### CREATION DU TABLEAU DE PROBABILITE digramme ################
 '''
-#~~ fonction pour embellir l'affichage du data diagramme
+#~~ fonction pour embellir l'affichage du data digramme
 def beautyData(data):
     cols_vides = [col for col in data.columns if data[col].sum() == 0.0]
     ligs_vides = [lig for lig in data.index.values.tolist() if data.loc[lig].sum() == 0.0]
@@ -72,21 +67,26 @@ def creerDigramme(dic):
 ### CREATION DE MOT ALEATOIRE EN FCT DU DIGRAMME ################
 '''
 #~~ sortirLettreAlea() qui retourne une lettre aléatoire, en fonction de la lettre de depart mis en parametre
-def sortirLettreAlea(lettrePos,diagramme):
+def sortirLettreAlea(lettrePos,digramme):
     
-    listesdechoixsuivant = diagramme.columns.tolist()
+    listesdechoixsuivant = digramme.columns.tolist()
     
-    listedeproba = diagramme.loc[str(lettrePos)].tolist()
+    listedeproba = digramme.loc[str(lettrePos)].tolist()
     lettre = np.random.choice(listesdechoixsuivant, p=listedeproba)
     return lettre
 
-#~~ creerMotAleaDiagramme() qui retourne un mot aléatoire
-def creerMotAleaDiagramme(taille,diagramme):
-    res = [sortirLettreAlea('deb',diagramme)]
+#~~ creerMotAleadigramme() qui retourne un mot aléatoire
+def creerMotAleaDigramme(taille,digramme):
+
+    res = [sortirLettreAlea('deb',digramme)]
     
     while res[-1] != "fin" and len(res[:-1])<= taille:
-        l = sortirLettreAlea(res[-1],diagramme)
-        res.append(l)
+        try:
+            l = sortirLettreAlea(res[-1],digramme)
+        except:
+            print("error sortirLettreAlea ..",res)
+        else:
+            res.append(l)
         #print(res)
     res = res[0:-1]
     return "".join(res)
