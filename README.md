@@ -8,6 +8,7 @@ We built a program using python able to invent words and simple sentences.
 
 ### 📸 Screenshots 
 ![](screens/1.PNG " ")
+<img src="screens/1.PNG" width="50">
 ![](screens/2.png " ")
 
 
