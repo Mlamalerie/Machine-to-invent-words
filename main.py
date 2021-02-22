@@ -1,6 +1,7 @@
 0# -*- coding: utf-8 -*-
 import random,os
 from Digramme import creerDigramme,creerMotAleaDigramme,beautyData
+from Trigramme import creerTrigramme,creerMotAleaTrigramme
 
 ''' 
 ### PARAMETRES VARIABLE ################
@@ -202,7 +203,7 @@ def printresultat(cheminFichier,cb,taille,trig_ok = True):
             if not trig_ok:
                 new = creerMotAleaDigramme(taille-1,data)
             else:
-                new = creerMotAleaTrigramme(taille-1,data)
+                new = creerMotAleaTrigramme(liste_mots,taille-1,data)
             
             loo.append(new)
             
@@ -288,14 +289,14 @@ def Menu_TRI():
     print("######### * TRIGRAM METHOD *")
     print("######### (0 : Words)")
     print("######### (1 : Sentences)")
-    c = int(input(" > "))
+    #c = int(input(" > "))
+    c = 0
     if c == 1:
         cb = int(input(" * how many new sentences to create > "))
         print("wait....")
         #genererPhrases_TRI(cb)
     else:
-        genererMots_TRI()
-        print("*")
+        genererMots(True)
     
     
 
@@ -303,7 +304,8 @@ def MENU_MAIN():
     print("################## * CHOOSE YOUR METHOD *")
     print("################## (0 : DIGRAMME)")
     print("################## (1 : TRIGRAMME)")
-    c = int(input(" > "))
+    #c = int(input(" > "))
+    c = 1
     if c == 1:
         Menu_TRI()
     else:
