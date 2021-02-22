@@ -7,9 +7,10 @@ We built a program using python able to invent words and simple sentences.
 ### sentences
 
 ### 📸 Screenshots 
-![](screens/1.PNG " ")
-<img src="screens/1.PNG" width="50">
-![](screens/2.png " ")
+
+<img src="screens/1.PNG" width="200">
+<img src="screens/2.png" width="250">
+
 
 
 ---
