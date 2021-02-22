@@ -7,7 +7,40 @@ from Trigramme import creerTrigramme,creerMotAleaTrigramme
 ### PARAMETRES VARIABLE ################
 '''
 
-listefichiers = os.listdir("data/fr")
+
+DOSSIERFILESTXT = "data"
+
+def select_files(orig,i = 0,prof=0,select_dic = {}):
+    espace = "  | "*prof
+    listefichiers = os.listdir(orig)
+    
+    
+    print( espace,f"### Select a file in '{orig}'")
+    for fil in listefichiers:
+        fil = orig + "/" + fil
+        if os.path.isdir(fil):
+            
+            i,nada = select_files(fil,i,prof+1,select_dic)
+            
+           
+        else:
+            print( espace,f'[{i}] :',fil)
+            select_dic[i] = fil
+            i+=1
+          
+    if prof == 0: #tout s'est rempiler
+          
+        choix = int(input(' >'))
+       
+        lefichier = select_dic[choix]
+        
+        return (i,lefichier)
+    else:
+        
+        return (i,None)
+
+
+
 alphabet = "abcdefghijklmnopqrstuvwxyzàâéèêëîïôùûüÿæœç"
 
 
@@ -256,13 +289,8 @@ def genererPhrases_TRI(cb):
     pass
 
 def genererMots(trig_ok):
-    print("#### Select a file")
-    i = 0
-    for txt in listefichiers:
-        print(f' ({i})',txt)
-        i+=1
-    choix = int(input(' >'))
-    cheminFichierDico = "data/fr/" + listefichiers[choix]
+    global DOSSIERFILESTXT
+    cheminFichierDico = select_files(DOSSIERFILESTXT)[1]
     nb = int(input('#### how many new words to create > '))
     taillemax = int(input('#### max word length > '))
     
