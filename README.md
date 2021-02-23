@@ -44,31 +44,30 @@ Aussi on pourra remarquer que le % de nouveau mot crée avec le trigramme, déj�
 ---
 ### 🎳 Bonus
 Maintenant que notre programme marche bien, on peut s'amuser en l'executant avec d'autres listes de mots !
-####  Créer de nouveaux prénoms Comorien 🇰🇲
+#### • Créer de nouveaux prénoms Comorien 🇰🇲
 De parents comoriens, chaque membre de ma famille possède un prénom comorien, un prénom qui sonnent comorien. Je me suis dit, pourquoi ne pas créer des prénoms comoriens pour voir ? <br>
 
 Pour ce faire, j'avais besoin d'un dictionnaire de prénoms comoriens.. mais contrairement au dictionnaire de prénoms français, il ,'existe pas de dictionnaire de mots comorien, déjà tout prêt et en format txt... Je devais donc créer moi même ce dictionnaire.<br>
 
 Non, je n'ai pas tapé un par un tous les noms comorien que je connaissais. En faite, en cherchant une liste de prénoms comorien je suis tombé sur un site qui énumération plein de prénoms féminin et masculin comorien. Hmmm comment récuperer des élements sur une veille page we.. bim WEB SCRAPING !
-J'ai donc utiliser une methode de <b> web scraping <b> en python pour récuperer super facilement ces 2 listes de prénoms, les laver et les convertir en format txt utilisable pour mon programme.<br>
+J'ai donc utiliser une methode de <b> web scraping </b> en python pour récuperer super facilement ces 2 listes de prénoms, les laver et les convertir en format txt utilisable pour mon programme.<br>
 
-Après execution magie magie on obtiens :
-![Nouveaux prénoms comoriens | Fille](results/result_DI_km-prenomFeminin_15_5000.txt "cliquez pour voir les mots crées") 
-![Nouveaux Prénoms comoriens | Garçon](results/result_DI_km-prenomMasculin_15_5000.txt "cliquez pour voir les mots crées")
+Après execution magie magie on obtiens :<br>
+![Nouveaux prénoms comoriens | Fille](results/result_DI_km-prenomFeminin_15_5000.txt "cliquez pour voir les mots crées") <br>
+![Nouveaux Prénoms comoriens | Garçon](results/result_DI_km-prenomMasculin_15_5000.txt "cliquez pour voir les mots crées")<br>
 
-J'ai montré ça à mes parents, ils ont validé le fait que malgré le fait que la majorité des mots n'ont aucun sens, on dirait vraiment des prénoms comoriens ! br> 
+J'ai montré ça à mes parents, ils ont pu validé le fait que malgré le fait que la majorité des mots n'aies aucun sens, on dirait vraiment des prénoms comoriens ! <br> 
 
-On peut conclure sur une chose : comme avec les nouveaux mots crées avec un dictionnaire français, on se rend compte qu'il y a une mélodie dans ces nouveaux mots crée qui nous semble familière. On peut dire que les mots sont enfaite des partitions, et selon la disposition de certaines notes, l'air joué change, la langue change. 
+En conclusion, comme avec les nouveaux mots crées avec un dictionnaire français, on se rend compte qu'il y a une "mélodie" dans ces nouveaux mots crée qui nous semble familière. On peut même dire que les mots sont en réalité des partitions, les enchainements de lettre sont des enchainements de note et selon la disposition de certaines notes, l'air joué change, la langue change. 
 
-####  Créer des noms aléatoires pour mes composition 🎹
+#### • Créer des noms aléatoires pour mes composition 🎹
 
 
 ---
 ### 📸 Screenshots 
 
-![](img/1.PNG "menu select file")
-![](img/2.png "result example")
-![](img/3.png "result example")
+![](img/1.PNG "screen")
+![](img/3.png "screen")
 
 ---
 ### 👨🏾‍💻👨🏼‍💻 Auteurs
