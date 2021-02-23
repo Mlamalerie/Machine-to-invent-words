@@ -1,7 +1,7 @@
 # Word inventing machine
 
 We built a program using python able to invent words or simple sentences. (:fr:) <br>
-Il existe plusieurs façons de générer aléatoirement des mots... Nous avons utilisé les méthodes d'[enchainements digrammes et trigrammes](### 🔩 The methods used to create the words).
+Il existe plusieurs façons de générer aléatoirement des mots... Nous avons utilisé les méthodes d'[enchainements digrammes et trigrammes](#-the-methods-used-to-create-the-words).
 
 ### ⚙ How to run it
 - Choisir la méthode de création voulu (digramme or trigramme)
@@ -38,10 +38,10 @@ La langue française est composée de 42 lettres, les 26 lettres de l’alphabet
 ---
 ### 🎳 Bonus
 
-#### 🇰🇲 Créer de nouveaux prénoms Comorien
+####  Créer de nouveaux prénoms Comorien 🇰🇲
 de Webscrapping de commnet j'ai pris les données des commores et pk
 ![Nouveaux Prénoms comoriens Fille](results/1.PNG "menu select file") j'ai montré à ma mère elle a valider blabalba c'est vrai
-#### 🎹 Créer des noms aléatoires pour mes prods
+####  Créer des noms aléatoires pour mes prods 🎹
 ![Nouveaux Prénoms comoriens Fille](results/1.PNG "menu select file") 
 
 ---
