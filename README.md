@@ -32,25 +32,36 @@ La méthode des trigrammes suit la même procédure que la méthode des digramme
 ### 📌 Résultats
 Comparons les résultats obtenu avec les méthodes dit diagramme et trigramme, après avoir sélectionné une liste de 11 mille adjectifs français. Pour des paramètres égaux (nb de nouveau mots = 5000 ET taille max d'un nouveau mot = 15) on obtient : <br><br>
 
-![](img/resultat1.png)
+![](img/resultat1.png) <br>
 [Nouveaux Verbe | DIGRAMME](results/result_DI_fr-adjectif_15_5000.txt "cliquez pour voir les mots crées") <br>
 
-![](img/resultat2.png)
+![](img/resultat2.png) <br>
 [Nouveaux Verbe | TRIGRAMME](results/result_TRI_fr-adjectif_15_5000.txt "cliquez pour voir les mots crées")
 
-On observe que certains mots paraissent français mais ne le sont pas haha !
-
-<br> <br>
+On observe que certains mots paraissent français mais ne le sont pas haha ! <br>
 Aussi on pourra remarquer que le % de nouveau mot crée avec le trigramme, déjà existant dans la liste de 6 mille verbes (donc le % de mots qui existent belle et bien !) est superieur au % de nouveau mots crée avec le digramme.
 
 ---
 ### 🎳 Bonus
-
+Maintenant que notre programme marche bien, on peut s'amuser en l'executant avec d'autres listes de mots !
 ####  Créer de nouveaux prénoms Comorien 🇰🇲
-de Webscrapping de commnet j'ai pris les données des commores et pk
-![Nouveaux Prénoms comoriens Fille](results/1.PNG "menu select file") j'ai montré à ma mère elle a valider blabalba c'est vrai
-####  Créer des noms aléatoires pour mes prods 🎹
-![Nouveaux Prénoms comoriens Fille](results/1.PNG "menu select file") 
+De parents comoriens, chaque membre de ma famille possède un prénom comorien, un prénom qui sonnent comorien. Je me suis dit, pourquoi ne pas créer des prénoms comoriens pour voir ? <br>
+
+Pour ce faire, j'avais besoin d'un dictionnaire de prénoms comoriens.. mais contrairement au dictionnaire de prénoms français, il ,'existe pas de dictionnaire de mots comorien, déjà tout prêt et en format txt... Je devais donc créer moi même ce dictionnaire.<br>
+
+Non, je n'ai pas tapé un par un tous les noms comorien que je connaissais. En faite, en cherchant une liste de prénoms comorien je suis tombé sur un site qui énumération plein de prénoms féminin et masculin comorien. Hmmm comment récuperer des élements sur une veille page we.. bim WEB SCRAPING !
+J'ai donc utiliser une methode de <b> web scraping <b> en python pour récuperer super facilement ces 2 listes de prénoms, les laver et les convertir en format txt utilisable pour mon programme.<br>
+
+Après execution magie magie on obtiens :
+![Nouveaux prénoms comoriens | Fille](results/result_DI_km-prenomFeminin_15_5000.txt "cliquez pour voir les mots crées") 
+![Nouveaux Prénoms comoriens | Garçon](results/result_DI_km-prenomMasculin_15_5000.txt "cliquez pour voir les mots crées")
+
+J'ai montré ça à mes parents, ils ont validé le fait que malgré le fait que la majorité des mots n'ont aucun sens, on dirait vraiment des prénoms comoriens ! br> 
+
+On peut conclure sur une chose : comme avec les nouveaux mots crées avec un dictionnaire français, on se rend compte qu'il y a une mélodie dans ces nouveaux mots crée qui nous semble familière. On peut dire que les mots sont enfaite des partitions, et selon la disposition de certaines notes, l'air joué change, la langue change. 
+
+####  Créer des noms aléatoires pour mes composition 🎹
+
 
 ---
 ### 📸 Screenshots 
