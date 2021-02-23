@@ -205,8 +205,14 @@ def realword(result,dic): #affiche pourcentage de mot qui existe déjà
 def printresultat(cheminFichier,cb,taille,trig_ok = True):
     liste_mots = get_words_dic(cheminFichier)
     suppr, liste_mots = cleanDic(liste_mots) #clean the list
-    print(" * Word deleted from {} : {}".format(cheminFichier,len(suppr)))
-    print(" * Number of words now :",len(liste_mots))
+    print(" * Number of words deleted from {} : {}".format(cheminFichier,len(suppr)))
+    print(" * Number of words which to based :",len(liste_mots))
+    
+    moyennetaille = 0
+    for m in liste_mots:
+        moyennetaille += len(m)/len(liste_mots)
+    print(" * Average words length :", round(moyennetaille,1) ) 
+    print("   --- ") 
     
     if not trig_ok:
         data = creerDigramme(liste_mots)
