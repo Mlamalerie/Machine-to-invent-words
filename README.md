@@ -53,8 +53,8 @@ Non, je n'ai pas tapé un par un tous les noms comoriens que je connaissais. En 
 J'ai donc utiliser une methode de <b> web scraping </b> en python pour récuperer super facilement ces 2 listes de prénoms, les laver et les convertir en format txt utilisable pour mon programme.<br>
 
 Après execution magie magie on obtiens :<br>
-![Nouveaux prénoms comoriens | Fille](results/result_DI_km-prenomFeminin_15_5000.txt "cliquez pour voir les mots crées") <br>
-![Nouveaux Prénoms comoriens | Garçon](results/result_DI_km-prenomMasculin_15_5000.txt "cliquez pour voir les mots crées")<br>
+[Nouveaux prénoms comoriens | Fille](results/result_DI_km-prenomFeminin_15_5000.txt "cliquez pour voir les mots crées") <br>
+[Nouveaux Prénoms comoriens | Garçon](results/result_DI_km-prenomMasculin_15_5000.txt "cliquez pour voir les mots crées")<br>
 
 J'ai montré ça à mes parents, ils ont pu validé le fait que malgré que la majorité des mots n'aies aucun sens, on dirait vraiment des prénoms comoriens ! <br> 
 
