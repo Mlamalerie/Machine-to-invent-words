@@ -13,31 +13,26 @@ DOSSIERFILESTXT = "data"
 def select_files(orig,i = 0,prof=0,select_dic = {}):
     espace = "  | "*prof
     listefichiers = os.listdir(orig)
-    
-    
+
+
     print( espace,f"### Select a file in '{orig}'")
     for fil in listefichiers:
-        fil = orig + "/" + fil
+        fil = f"{orig}/{fil}"
         if os.path.isdir(fil):
-            
+
             i,nada = select_files(fil,i,prof+1,select_dic)
-            
-           
+
+
         else:
             print( espace,f'[{i}] :',fil)
             select_dic[i] = fil
             i+=1
-          
-    if prof == 0: #tout s'est rempiler
-          
-        choix = int(input(' >'))
-       
-        lefichier = select_dic[choix]
-        
-        return (i,lefichier)
-    else:
-        
+
+    if prof != 0:
         return (i,None)
+    choix = int(input(' >'))
+
+    return i, select_dic[choix]
 
 
 
@@ -69,10 +64,7 @@ def enlever_accent(mot):
 
 def creeMotAleatoire(taille):
     global alphabet
-    res = ""
-    for i in range(taille):
-        res += random.choice(alphabet)
-    return res
+    return "".join(random.choice(alphabet) for _ in range(taille))
 
 ''' 
 ### RECUPERATION MOTS DICTIONNAIRE ################
@@ -195,82 +187,68 @@ if len(kelbaysuppr) > 0:
 ### CREATION DU DIGRAMME ################
 '''
 def realword(result,dic): #affiche pourcentage de mot qui existe déjà
-    cpt = 0
-    for mot in result:
-        if mot in dic:
-            cpt += 1
-    
+    cpt = sum(1 for mot in result if mot in dic)
     return cpt/len(result)
 
 def printresultat(cheminFichier,cb,taille,trig_ok = True):
     liste_mots = get_words_dic(cheminFichier)
     suppr, liste_mots = cleanDic(liste_mots) #clean the list
-    print(" * Number of words deleted from {} : {}".format(cheminFichier,len(suppr)))
+    print(f" * Number of words deleted from {cheminFichier} : {len(suppr)}")
     print(" * Number of words which to based :",len(liste_mots))
-    
-    moyennetaille = 0
-    for m in liste_mots:
-        moyennetaille += len(m)/len(liste_mots)
-    print(" * Average words length :", round(moyennetaille,1) ) 
+
+    moyennetaille = sum(len(m)/len(liste_mots) for m in liste_mots)
+    print(" * Average words length :", round(moyennetaille,1) )
     print("   --- ") 
-    
-    if not trig_ok:
-        data = creerDigramme(liste_mots)
-    else:
-        data = creerTrigramme(liste_mots)
+
+    data = creerDigramme(liste_mots) if not trig_ok else creerTrigramme(liste_mots)
     #print(beautyData(dataDI)) # afficher le tableau de probabilité
-    
+
     nomEmplacementSauvegarde = "results"
     if not os.path.exists(nomEmplacementSauvegarde):
     	os.makedirs(nomEmplacementSauvegarde)
-    
+
     nom = cheminFichier.split("/")[-1][:-4]
-    chemin = nomEmplacementSauvegarde
-    
-    
-    if not trig_ok:
-        chemin += "/result_DI_"
-    else:
-        chemin += "/result_TRI_"
+    chemin = nomEmplacementSauvegarde + (
+        "/result_DI_" if not trig_ok else "/result_TRI_"
+    )
     chemin += cheminFichier.split("/")[-2] +"-"+nom
-    chemin += "_"+str(taille)
-    chemin += "_"+str(cb) 
+    chemin += f"_{str(taille)}"
+    chemin += f"_{str(cb)}"
     chemin += ".txt"
-    
+
     loo = []
     with open(chemin,"w") as fic: #creer fichier txt
-        for k in range(cb): #creer k nouveaux mots
-            if not trig_ok:
-                new = creerMotAleaDigramme(taille-1,data)
-            else:
-                new = creerMotAleaTrigramme(liste_mots,taille-1,data)
-            
+        for _ in range(cb):
+            new = (
+                creerMotAleaDigramme(taille - 1, data)
+                if not trig_ok
+                else creerMotAleaTrigramme(liste_mots, taille - 1, data)
+            )
             loo.append(new)
-            
-        loo = list(dict.fromkeys(loo)) #delete duplicate
-        loo.sort() 
+
+        loo = sorted(dict.fromkeys(loo))
         fic.write("\n".join(loo)) 
-        
+
     print(" * The generated words are saved :",chemin,"!")
     print(f" * {round(realword(loo,liste_mots)*100,2)} % of the words already exist in {nom} file")
 
 
 def genererPhrases_DI(cb):
-    liste_mots = get_words_dic("data/fr/" + listefichiers[5])
+    liste_mots = get_words_dic(f"data/fr/{listefichiers[5]}")
     suppr, liste_mots = cleanDic(liste_mots)
-    dataVerbe =  creerDigramme(liste_mots) 
+    dataVerbe =  creerDigramme(liste_mots)
     print("wait...")
-    liste_mots = get_words_dic("data/fr/" + listefichiers[3])
+    liste_mots = get_words_dic(f"data/fr/{listefichiers[3]}")
     suppr, liste_mots = cleanDic(liste_mots)
-    dataNom =  creerDigramme(liste_mots) 
+    dataNom =  creerDigramme(liste_mots)
     print("wait..")
-    liste_mots = get_words_dic("data/fr/" + listefichiers[2])
+    liste_mots = get_words_dic(f"data/fr/{listefichiers[2]}")
     suppr, liste_mots = cleanDic(liste_mots)
-    dataArticle = creerDigramme(liste_mots) 
+    dataArticle = creerDigramme(liste_mots)
     print("wait. \n")
-    liste_mots = get_words_dic("data/fr/" + listefichiers[1])
+    liste_mots = get_words_dic(f"data/fr/{listefichiers[1]}")
     suppr, liste_mots = cleanDic(liste_mots)
-    dataAdjectif =  creerDigramme(liste_mots) 
+    dataAdjectif =  creerDigramme(liste_mots)
     print(" ~  VERBE + ARTICLE + NOM + ADJECTIF")
     for k in range(cb):
         article = creerMotAleadigramme(3,dataArticle)
@@ -283,13 +261,13 @@ def genererPhrases_DI(cb):
         adjectif = creerMotAleadigramme(12,dataAdjectif)
         while len(adjectif) < 2:
             adjectif = creerMotAleadigramme(12,dataAdjectif)
-        
+
         if article[-1] == 's':
             if nom[-1] != "s":
                 nom += "s"
             if adjectif[-1] != "s":
                  adjectif += "s"
-           
+
         print(k,"-",verbe,article,nom,adjectif)
 
 def genererPhrases_TRI(cb):

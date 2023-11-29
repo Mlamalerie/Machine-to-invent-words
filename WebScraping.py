@@ -26,10 +26,10 @@ def recup_words_on(url):
         #print(response.text)
         trs = soup.findAll('tr')
         trs = [tr for tr in trs if tr['style'] == 'height:18.75pt']
-        
+
         #print(trs)
         #print(len(trs))
-        
+
         for tr in trs:
             tds = tr.findAll('td')
             #print(tds)
@@ -38,12 +38,10 @@ def recup_words_on(url):
                 #print(td['class'],(td.text))
                 mot = td.text.split(':')[0].strip()
                 if len(mot.split(',')) > 1:
-                    for m in mot.split(','):
-                        res.append(m.strip())   
+                    res.extend(m.strip() for m in mot.split(','))
                 else:
                     res.append(mot)
-        res = [mot.lower().split(" ")[0] for mot in res ]
-        return res
+        return [mot.lower().split(" ")[0] for mot in res ]
     
 words = recup_words_on(url) 
 
@@ -54,13 +52,12 @@ def save(liste_mots,namefile):
     nomEmplacementSauvegarde += "/km"
     if not os.path.exists(nomEmplacementSauvegarde):
     	os.makedirs(nomEmplacementSauvegarde)
-    nomEmplacementSauvegarde += '/' + namefile
-    
+    nomEmplacementSauvegarde += f'/{namefile}'
+
     with open(nomEmplacementSauvegarde,"w",encoding="utf8") as fic: #creer fichier txt   
-        liste_mots = list(dict.fromkeys(liste_mots)) #delete duplicate
-        liste_mots.sort() 
+        liste_mots = sorted(dict.fromkeys(liste_mots))
         fic.write("\n".join(liste_mots)) 
-        
+
     print(" * saved :",nomEmplacementSauvegarde,"!")
         
 print(len(words)) 

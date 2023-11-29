@@ -70,16 +70,15 @@ def creerDigramme(dic):
 def sortirLettreAlea(lettrePos,digramme):
     
     listesdechoixsuivant = digramme.columns.tolist()
-    
+
     listedeproba = digramme.loc[str(lettrePos)].tolist()
-    lettre = np.random.choice(listesdechoixsuivant, p=listedeproba)
-    return lettre
+    return np.random.choice(listesdechoixsuivant, p=listedeproba)
 
 #~~ creerMotAleadigramme() qui retourne un mot aléatoire
 def creerMotAleaDigramme(taille,digramme):
 
     res = [sortirLettreAlea('deb',digramme)]
-    
+
     while res[-1] != "fin" and len(res[:-1])<= taille:
         try:
             l = sortirLettreAlea(res[-1],digramme)
@@ -88,7 +87,7 @@ def creerMotAleaDigramme(taille,digramme):
         else:
             res.append(l)
         #print(res)
-    res = res[0:-1]
+    res = res[:-1]
     return "".join(res)
 
 
